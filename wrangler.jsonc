@@ -1,0 +1,22 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "iamfatness-website",
+  "main": "site-worker.js",
+  "compatibility_date": "2026-06-01",
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [
+    {
+      "pattern": "iamfatness.us/*",
+      "zone_name": "iamfatness.us"
+    },
+    {
+      "pattern": "www.iamfatness.us/*",
+      "zone_name": "iamfatness.us"
+    }
+  ],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./public"
+  }
+}
