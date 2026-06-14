@@ -1,0 +1,13 @@
+{
+  "name": "iamfatness-website",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Umbrella landing site for iamfatness.us",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4"
+  }
+}
