@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "public/**"
+      - "sites/**"
       - "site-worker.js"
       - "wrangler.jsonc"
       - ".github/workflows/deploy-site.yml"
@@ -14,10 +15,20 @@ concurrency:
   group: deploy-site
   cancel-in-progress: true
 
+# Every site is redeployed on each run; a deploy with no changes is a no-op.
+
 jobs:
   deploy:
-    name: Deploy iamfatness.us
+    name: Deploy ${{ matrix.site }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - site: iamfatness.us
+            config: wrangler.jsonc
+          - site: swarmscribe.iamfatness.us
+            config: sites/swarmscribe/wrangler.jsonc
     permissions:
       contents: read
       deployments: write
@@ -41,7 +52,7 @@ jobs:
               echo
               echo "Set CLOUDFLARE_API_TOKEN as a repository secret and"
               echo "CLOUDFLARE_ACCOUNT_ID as either a repository secret or variable"
-              echo "to enable deployment to iamfatness.us."
+              echo "to enable deployment to ${{ matrix.site }}."
             } >> "$GITHUB_STEP_SUMMARY"
             echo "deploy_enabled=false" >> "$GITHUB_OUTPUT"
             exit 0
@@ -50,4 +61,4 @@ jobs:
 
       - name: Deploy to Cloudflare Workers
         if: steps.cloudflare_config.outputs.deploy_enabled == 'true'
-        run: npx wrangler@latest deploy
+        run: npx wrangler@latest deploy --config ${{ matrix.config }}

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="SwarmScribe">
+  <path d="M32 4 56.25 18v28L32 60 7.75 46V18z" fill="#f5b83d" stroke="#f5b83d" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M32 51 21 30l4-14h14l4 14z" fill="#14110d" stroke="#14110d" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M32 51V33" stroke="#f5b83d" stroke-width="2.4" stroke-linecap="round"/>
+  <circle cx="32" cy="30.5" r="3" fill="#f5b83d"/>
+</svg>
