@@ -51,7 +51,9 @@ export default {
       }
     }
 
-    response = await fetchAsset(request, env, "/404.html");
+    // Asset routing serves 404.html at /404; asking for /404.html only returns
+    // a bodiless redirect.
+    response = await fetchAsset(request, env, "/404");
     return withHeaders(new Response(response.body, {
       status: 404,
       headers: response.headers,

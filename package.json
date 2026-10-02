@@ -5,7 +5,9 @@
   "description": "Umbrella landing site for iamfatness.us",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy"
+    "deploy": "wrangler deploy",
+    "dev:swarmscribe": "wrangler dev --config sites/swarmscribe/wrangler.jsonc",
+    "deploy:swarmscribe": "wrangler deploy --config sites/swarmscribe/wrangler.jsonc"
   },
   "devDependencies": {
     "wrangler": "^4"

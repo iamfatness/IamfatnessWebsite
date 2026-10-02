@@ -5,11 +5,13 @@ studio and links out to each product on its own subdomain:
 
 - **CoreVideo** → https://corevideo.iamfatness.us/ (OBS plugin + CoreVideo Pro)
 - **Resonance** → https://resonance.iamfatness.us/ (DJ-style music player / EQ)
+- **SwarmScribe** → https://swarmscribe.iamfatness.us/ (distributed transcription; coming soon)
 
 The product subdomains live in their own repos (`corevideo.iamfatness.us` in
 [CoreVideo](https://github.com/iamfatness/CoreVideo); `resonance.iamfatness.us`
 *is* the [Resonance](https://github.com/iamfatness/resonance) app itself). This
-repo only owns the root `iamfatness.us` landing page.
+repo owns the root `iamfatness.us` landing page, plus the SwarmScribe
+"coming soon" page until that product has a site of its own.
 
 ## What this is
 
@@ -25,7 +27,11 @@ public/            Static site (served by the Worker's ASSETS binding)
   CNAME            iamfatness.us
 site-worker.js     Worker: static assets + security headers + trailing slash + 404
 wrangler.jsonc     Worker config + routes for iamfatness.us and www.iamfatness.us
-.github/workflows/deploy-site.yml   Deploy on push to main (or manual dispatch)
+sites/swarmscribe/ Second Worker (`swarmscribe-website`) for swarmscribe.iamfatness.us
+  public/          Its static page, CSS and logo files (logo.svg, logo-lockup.svg, favicon.svg, og.png)
+  og.html          Source for public/assets/og.png (screenshot at 1200x630; not deployed)
+  wrangler.jsonc   Worker config; reuses ../../site-worker.js, bound as a custom domain
+.github/workflows/deploy-site.yml   Deploy both Workers on push to main (or manual dispatch)
 ```
 
 There is no build step — `public/` is served as-is.
@@ -34,7 +40,8 @@ There is no build step — `public/` is served as-is.
 
 ```sh
 npm install
-npm run dev      # wrangler dev
+npm run dev                # iamfatness.us
+npm run dev:swarmscribe    # swarmscribe.iamfatness.us
 ```
 
 ## Deploy

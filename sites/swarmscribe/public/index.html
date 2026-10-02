@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SwarmScribe | Distributed transcription for large audio archives</title>
+  <meta name="description" content="SwarmScribe is an upcoming tool that transcribes a large archive of recordings by sharing the work across every machine you can spare. Text, subtitles and word-level timing, on your own hardware.">
+  <meta name="theme-color" content="#14110d">
+  <meta property="og:title" content="SwarmScribe">
+  <meta property="og:description" content="Distributed transcription for large audio archives. In development.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://swarmscribe.iamfatness.us/">
+  <meta property="og:image" content="https://swarmscribe.iamfatness.us/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://swarmscribe.iamfatness.us/">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="SwarmScribe home">
+      <img src="/assets/logo.svg" alt="" width="34" height="34">
+      <span class="wordmark">Swarm<em>Scribe</em></span>
+    </a>
+    <nav aria-label="Sections">
+      <a href="#how">How it works</a>
+      <a href="#outputs">What you get</a>
+      <a href="#status">Status</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero wrap">
+      <div class="hero-copy">
+        <h1>A backlog of recordings, transcribed by every machine you can spare.</h1>
+        <p class="lede">
+          SwarmScribe shares one big transcription job across many computers.
+          A leader keeps the list of recordings and hands them out. Followers,
+          on servers or ordinary PCs, each take a recording, transcribe it and
+          send the text back.
+        </p>
+        <p class="status-line"><span class="pip" aria-hidden="true"></span>In development. Not available yet.</p>
+      </div>
+
+      <figure class="ledger">
+        <div class="ledger-head">
+          <span>Archive queue</span>
+          <span>4 followers connected</span>
+        </div>
+        <ol class="ledger-rows">
+          <li class="is-done">
+            <span class="rec">Town hall, 12 March 2019</span>
+            <span class="len">1:42:10</span>
+            <span class="state">Done</span>
+          </li>
+          <li class="is-done">
+            <span class="rec">Oral history interview 0417</span>
+            <span class="len">58:03</span>
+            <span class="state">Done</span>
+          </li>
+          <li class="is-working">
+            <span class="rec">Lecture series, week 9</span>
+            <span class="len">1:15:44</span>
+            <span class="state">gpu-02</span>
+            <span class="bar" aria-hidden="true"><span style="width:72%"></span></span>
+          </li>
+          <li class="is-working">
+            <span class="rec">Board meeting, audio only</span>
+            <span class="len">2:03:29</span>
+            <span class="state">office-pc-4</span>
+            <span class="bar" aria-hidden="true"><span style="width:31%"></span></span>
+          </li>
+          <li class="is-queued">
+            <span class="rec">Field recording 2231</span>
+            <span class="len">37:12</span>
+            <span class="state">Queued</span>
+          </li>
+          <li class="is-held">
+            <span class="rec">Panel discussion, not cleared</span>
+            <span class="len">1:08:55</span>
+            <span class="state">Never sent</span>
+          </li>
+        </ol>
+        <figcaption>An illustration of the queue, not a screenshot.</figcaption>
+      </figure>
+    </section>
+
+    <section id="how" class="band">
+      <div class="wrap">
+        <h2>How it works</h2>
+        <ol class="steps">
+          <li>
+            <h3>You mark what may be transcribed</h3>
+            <p>Only recordings you have explicitly cleared become jobs. Everything else stays where it is, and no follower can ask for it.</p>
+          </li>
+          <li>
+            <h3>Machines join with one command</h3>
+            <p>A follower needs Docker or Kubernetes and a join token. It uses a GPU if it finds one and falls back to the CPU if not.</p>
+          </li>
+          <li>
+            <h3>Each follower takes one recording at a time</h3>
+            <p>Followers call the leader and never accept incoming connections, so a PC behind a home router works as well as a server in a rack.</p>
+          </li>
+          <li>
+            <h3>Results land in your storage</h3>
+            <p>The leader stores every finished transcript in Azure Blob Storage, Google Cloud Storage or a local disk, whichever you already use.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="outputs" class="wrap section">
+      <h2>What you get for every recording</h2>
+      <div class="outputs">
+        <article>
+          <h3>Plain text</h3>
+          <p>The full transcript, ready to read, search or index.</p>
+          <pre aria-label="Example transcript text">Thank you all for coming tonight.
+Before we start, a few notes
+on the agenda.</pre>
+        </article>
+        <article>
+          <h3>Subtitles</h3>
+          <p>A standard SRT file that drops straight into a video player or editor.</p>
+          <pre aria-label="Example subtitle file">1
+00:00:04,120 --> 00:00:06,480
+Thank you all for coming tonight.</pre>
+        </article>
+        <article>
+          <h3>Word-level timing</h3>
+          <p>Start and end times for every word, with the settings that produced them.</p>
+          <pre aria-label="Example word timing data">{ "word": "Thank",
+  "start": 4.12, "end": 4.38,
+  "probability": 0.98 }</pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap section">
+      <h2>Built to be left running</h2>
+      <dl class="promises">
+        <div>
+          <dt>Nothing gets stranded</dt>
+          <dd>If a follower dies mid-job, its recording goes back in the queue. Every recording ends up either finished or parked with a reason.</dd>
+        </div>
+        <div>
+          <dt>Followers hold no keys</dt>
+          <dd>A follower never sees your storage credentials. It gets a short-lived link to one file, and nothing more.</dd>
+        </div>
+        <div>
+          <dt>The leader can be restarted any time</dt>
+          <dd>All state lives in Postgres, so any copy of the leader can stop without losing work.</dd>
+        </div>
+        <div>
+          <dt>Your hardware, your audio</dt>
+          <dd>Transcription runs on open Whisper models on machines you choose. No recording is sent to a transcription service.</dd>
+        </div>
+        <div>
+          <dt>You can see what is happening</dt>
+          <dd>Queue depth, each follower's throughput and every failure are visible without reading logs.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section id="status" class="band">
+      <div class="wrap status">
+        <div>
+          <h2>Where it stands</h2>
+          <p>SwarmScribe is being built now. The design is settled and the first pieces are under way. There is nothing to download yet, and no date to announce.</p>
+        </div>
+        <div>
+          <h3>Not in the first release</h3>
+          <ul class="later">
+            <li>Languages other than English</li>
+            <li>Telling speakers apart</li>
+            <li>Translation</li>
+            <li>Live transcription</li>
+            <li>A web dashboard</li>
+            <li>An installer that does not need Docker</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>SwarmScribe is made by <a href="https://iamfatness.us/">iamfatness</a>, alongside CoreVideo and Resonance.</span>
+  </footer>
+</body>
+</html>
