@@ -311,6 +311,7 @@ nav a:hover { color: var(--text); }
 .words h2 { margin-bottom: 18px; }
 .section-lede { color: var(--muted); max-width: 40ch; }
 .words .promises { grid-template-columns: minmax(0, 1fr); }
+.roadmap-lede { max-width: 60ch; margin: -16px 0 28px; }
 code {
   font-family: var(--mono);
   font-size: 0.9em;
