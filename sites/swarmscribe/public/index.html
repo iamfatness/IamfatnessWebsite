@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SwarmScribe | Distributed transcription for large audio archives</title>
-  <meta name="description" content="SwarmScribe is an upcoming tool that transcribes a large archive of recordings by sharing the work across every machine you can spare. Text, subtitles and word-level timing, on your own hardware.">
+  <title>SwarmScribe | Transcription for recording archives and recorded calls</title>
+  <meta name="description" content="SwarmScribe is an upcoming system that transcribes recording archives and recorded calls on machines you choose. Consent rules decide what gets in, calls are labelled by speaker role, and your own vocabulary steers recognition.">
   <meta name="theme-color" content="#14110d">
   <meta property="og:title" content="SwarmScribe">
-  <meta property="og:description" content="Distributed transcription for large audio archives. In development.">
+  <meta property="og:description" content="Transcription for recording archives and recorded calls, on machines you choose. In development.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://swarmscribe.iamfatness.us/">
   <meta property="og:image" content="https://swarmscribe.iamfatness.us/assets/og.png">
@@ -25,60 +25,67 @@
       <span class="wordmark">Swarm<em>Scribe</em></span>
     </a>
     <nav aria-label="Sections">
+      <a href="#ways">Archives and calls</a>
       <a href="#how">How it works</a>
-      <a href="#outputs">What you get</a>
+      <a href="#words">Your vocabulary</a>
       <a href="#status">Status</a>
+      <a href="#roadmap">Roadmap</a>
     </nav>
   </header>
 
   <main id="main">
     <section class="hero wrap">
       <div class="hero-copy">
-        <h1>A backlog of recordings, transcribed by every machine you can spare.</h1>
+        <h1>Transcribe your recording archive and your recorded calls, on machines you choose.</h1>
         <p class="lede">
-          SwarmScribe shares one big transcription job across many computers.
-          A leader keeps the list of recordings and hands them out. Followers,
-          on servers or ordinary PCs, each take a recording, transcribe it and
-          send the text back.
+          SwarmScribe takes recordings from two places: the folders where your
+          archive already lives, and calls your phone platform forks to it as
+          they happen. Consent rules decide what gets in. The work is shared
+          across every machine you connect, from servers to ordinary PCs.
         </p>
         <p class="status-line"><span class="pip" aria-hidden="true"></span>In development. Not available yet.</p>
       </div>
 
       <figure class="ledger">
         <div class="ledger-head">
-          <span>Archive queue</span>
-          <span>4 followers connected</span>
+          <span>Queue</span>
+          <span>6 followers connected</span>
         </div>
         <ol class="ledger-rows">
           <li class="is-done">
             <span class="rec">Town hall, 12 March 2019</span>
+            <span class="kind">Archive file</span>
             <span class="len">1:42:10</span>
             <span class="state">Done</span>
           </li>
           <li class="is-done">
-            <span class="rec">Oral history interview 0417</span>
-            <span class="len">58:03</span>
+            <span class="rec">Inbound call, support queue</span>
+            <span class="kind">Call, Agent and Customer</span>
+            <span class="len">6:41</span>
             <span class="state">Done</span>
           </li>
           <li class="is-working">
             <span class="rec">Lecture series, week 9</span>
+            <span class="kind">Archive file</span>
             <span class="len">1:15:44</span>
             <span class="state">gpu-02</span>
             <span class="bar" aria-hidden="true"><span style="width:72%"></span></span>
           </li>
-          <li class="is-working">
-            <span class="rec">Board meeting, audio only</span>
-            <span class="len">2:03:29</span>
-            <span class="state">office-pc-4</span>
-            <span class="bar" aria-hidden="true"><span style="width:31%"></span></span>
+          <li class="is-recording">
+            <span class="rec">Outbound call, sales line</span>
+            <span class="kind">Call, Agent and Customer</span>
+            <span class="len">3:12</span>
+            <span class="state">Recording</span>
           </li>
-          <li class="is-queued">
-            <span class="rec">Field recording 2231</span>
-            <span class="len">37:12</span>
-            <span class="state">Queued</span>
+          <li class="is-held">
+            <span class="rec">Call matching no rule</span>
+            <span class="kind">Call</span>
+            <span class="len">&ndash;</span>
+            <span class="state">Refused</span>
           </li>
           <li class="is-held">
             <span class="rec">Panel discussion, not cleared</span>
+            <span class="kind">Archive file</span>
             <span class="len">1:08:55</span>
             <span class="state">Never sent</span>
           </li>
@@ -87,100 +94,185 @@
       </figure>
     </section>
 
-    <section id="how" class="band">
+    <section id="ways" class="band">
       <div class="wrap">
-        <h2>How it works</h2>
-        <ol class="steps">
-          <li>
-            <h3>You mark what may be transcribed</h3>
-            <p>Only recordings you have explicitly cleared become jobs. Everything else stays where it is, and no follower can ask for it.</p>
-          </li>
-          <li>
-            <h3>Machines join with one command</h3>
-            <p>A follower needs Docker or Kubernetes and a join token. It uses a GPU if it finds one and falls back to the CPU if not.</p>
-          </li>
-          <li>
-            <h3>Each follower takes one recording at a time</h3>
-            <p>Followers call the leader and never accept incoming connections, so a PC behind a home router works as well as a server in a rack.</p>
-          </li>
-          <li>
-            <h3>Results land in your storage</h3>
-            <p>The leader stores every finished transcript in Azure Blob Storage, Google Cloud Storage or a local disk, whichever you already use.</p>
-          </li>
-        </ol>
+        <h2>Two ways in, both behind consent</h2>
+        <div class="ways">
+          <article>
+            <h3>Recording archives</h3>
+            <p>Point SwarmScribe at folders in Azure Blob Storage, Google Cloud Storage or a local disk. Each folder carries a short allowlist of the recordings that may be transcribed. SwarmScribe checks for new files on a schedule, or whenever you ask, and queues only what the list allows.</p>
+            <ul class="facts">
+              <li>Audio and video files, as they already sit in storage</li>
+              <li>Transcripts are written back beside the recordings</li>
+              <li>A file that changes is transcribed again</li>
+            </ul>
+          </article>
+          <article>
+            <h3>Recorded calls</h3>
+            <p>Session border controllers and contact-centre platforms send calls to SwarmScribe over SIPREC, the standard for forking a copy of a call to a recorder. A call that matches none of your rules is turned away before any audio arrives.</p>
+            <ul class="facts">
+              <li>Encrypted in transit: SIP over TLS and SRTP media, and unencrypted calls are refused</li>
+              <li>Each call stored as one stereo file, one party per side</li>
+              <li>Transcripts labelled by role, such as Agent and Customer, never by name or number</li>
+              <li>Built to grow to 100,000 calls a day by adding machines</li>
+              <li>Runs in the cloud or on-premises beside your own equipment</li>
+            </ul>
+          </article>
+        </div>
       </div>
     </section>
 
-    <section id="outputs" class="wrap section">
-      <h2>What you get for every recording</h2>
-      <div class="outputs">
-        <article>
-          <h3>Plain text</h3>
-          <p>The full transcript, ready to read, search or index.</p>
-          <pre aria-label="Example transcript text">Thank you all for coming tonight.
-Before we start, a few notes
-on the agenda.</pre>
-        </article>
-        <article>
-          <h3>Subtitles</h3>
-          <p>A standard SRT file that drops straight into a video player or editor.</p>
-          <pre aria-label="Example subtitle file">1
-00:00:04,120 --> 00:00:06,480
-Thank you all for coming tonight.</pre>
-        </article>
-        <article>
-          <h3>Word-level timing</h3>
-          <p>Start and end times for every word, with the settings that produced them.</p>
-          <pre aria-label="Example word timing data">{ "word": "Thank",
-  "start": 4.12, "end": 4.38,
-  "probability": 0.98 }</pre>
-        </article>
+    <section id="how" class="wrap section">
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li>
+          <h3>Consent rules decide what gets in</h3>
+          <p>A folder's allowlist covers archive files. Call rules, matched on who sent the call and where it was headed, cover calls. Nothing else becomes a job.</p>
+        </li>
+        <li>
+          <h3>Machines join with one command</h3>
+          <p>A follower needs Docker or Kubernetes and a join token. It uses a GPU if it finds one and falls back to the CPU if not.</p>
+        </li>
+        <li>
+          <h3>Each follower takes one recording at a time</h3>
+          <p>Followers call the leader and never accept incoming connections, so a PC behind a home router works as well as a server in a rack.</p>
+        </li>
+        <li>
+          <h3>Results land in your storage</h3>
+          <p>Every finished transcript is stored with its recording, in the storage you already use.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section id="outputs" class="band">
+      <div class="wrap">
+        <h2>What you get for every recording</h2>
+        <div class="outputs">
+          <article>
+            <h3>Plain text</h3>
+            <p>The full transcript, ready to read, search or index. When each speaker has their own channel, every line says who spoke.</p>
+            <pre aria-label="Example speaker-labelled transcript">Agent: Thanks for calling, how
+can I help?
+Customer: I'm checking on an
+order from Tuesday.</pre>
+          </article>
+          <article>
+            <h3>Subtitles</h3>
+            <p>A standard SRT file that drops straight into a video player or editor.</p>
+            <pre aria-label="Example subtitle file">1
+00:00:01,240 --> 00:00:03,060
+Agent: Thanks for calling,
+how can I help?</pre>
+          </article>
+          <article>
+            <h3>Word-level timing</h3>
+            <p>Start and end times for every word, with the settings and vocabulary that produced them.</p>
+            <pre aria-label="Example word timing data">{ "word": "Thanks",
+  "start": 1.24, "end": 1.51,
+  "probability": 0.97,
+  "channel": 0 }</pre>
+          </article>
+        </div>
       </div>
     </section>
 
-    <section class="wrap section">
-      <h2>Built to be left running</h2>
+    <section id="words" class="wrap section words">
+      <div>
+        <h2>Teach it your words</h2>
+        <p class="section-lede">Names, places and product terms are where general-purpose speech recognition stumbles. SwarmScribe lets you fix that once and apply it everywhere.</p>
+      </div>
       <dl class="promises">
         <div>
-          <dt>Nothing gets stranded</dt>
-          <dd>If a follower dies mid-job, its recording goes back in the queue. Every recording ends up either finished or parked with a reason.</dd>
+          <dt>A vocabulary list</dt>
+          <dd>One term per line, most important first. The list steers recognition across the whole recording, and each transcript records exactly which terms were used.</dd>
         </div>
         <div>
-          <dt>Followers hold no keys</dt>
-          <dd>A follower never sees your storage credentials. It gets a short-lived link to one file, and nothing more.</dd>
+          <dt>Corrections</dt>
+          <dd>Write what it heard and what it should be, such as <code>jay son =&gt; Jason</code>. Fixes apply to whole words only, and the original wording is kept alongside.</dd>
         </div>
         <div>
-          <dt>The leader can be restarted any time</dt>
-          <dd>All state lives in Postgres, so any copy of the leader can stop without losing work.</dd>
+          <dt>A report of what to add next</dt>
+          <dd>SwarmScribe ranks the words it was least sure of, across all your recordings, so you can see which terms are worth adding.</dd>
         </div>
         <div>
-          <dt>Your hardware, your audio</dt>
-          <dd>Transcription runs on open Whisper models on machines you choose. No recording is sent to a transcription service.</dd>
-        </div>
-        <div>
-          <dt>You can see what is happening</dt>
-          <dd>Queue depth, each follower's throughput and every failure are visible without reading logs.</dd>
+          <dt>Re-run what changed</dt>
+          <dd>After you update the vocabulary, re-queue the recordings it affects. The previous transcripts stay in place until the new ones are ready.</dd>
         </div>
       </dl>
     </section>
 
-    <section id="status" class="band">
-      <div class="wrap status">
+    <section class="band">
+      <div class="wrap">
+        <h2>Built to be left running</h2>
+        <dl class="promises">
+          <div>
+            <dt>Nothing gets stranded</dt>
+            <dd>If a follower dies mid-job, its recording goes back in the queue. Every recording ends up either finished or parked with a reason.</dd>
+          </div>
+          <div>
+            <dt>Followers hold no keys</dt>
+            <dd>A follower never sees your storage credentials. It gets a short-lived link to one file, and nothing more.</dd>
+          </div>
+          <div>
+            <dt>The leader can be restarted any time</dt>
+            <dd>All state lives in Postgres, so any copy of the leader can stop without losing work.</dd>
+          </div>
+          <div>
+            <dt>Every change has a name on it</dt>
+            <dd>Administrators sign in with Microsoft Entra ID or Google, each with a viewer, operator or admin role. Every change they make is recorded against them.</dd>
+          </div>
+          <div>
+            <dt>Your hardware, your audio</dt>
+            <dd>Transcription runs on open Whisper models on machines you choose. No recording is sent to a transcription service.</dd>
+          </div>
+          <div>
+            <dt>You can see what is happening</dt>
+            <dd>Queue depth, each follower's throughput and every failure are exposed as metrics, without reading logs.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section id="status" class="wrap section">
+      <div class="status">
         <div>
           <h2>Where it stands</h2>
-          <p>SwarmScribe is being built now. The design is settled and the first pieces are under way. There is nothing to download yet, and no date to announce.</p>
+          <p>SwarmScribe is being built now. The transcription engine and the core of the leader exist; followers and call recording are designed and come next. There is nothing to download yet, and no date to announce.</p>
         </div>
         <div>
-          <h3>Not in the first release</h3>
+          <h3>Not planned yet</h3>
           <ul class="later">
+            <li>Telling apart speakers who share one channel</li>
             <li>Languages other than English</li>
-            <li>Telling speakers apart</li>
             <li>Translation</li>
-            <li>Live transcription</li>
-            <li>A web dashboard</li>
             <li>An installer that does not need Docker</li>
           </ul>
         </div>
+      </div>
+    </section>
+
+    <section id="roadmap" class="band">
+      <div class="wrap">
+        <h2>Planned after the first release</h2>
+        <p class="section-lede roadmap-lede">These are agreed and will each be designed and built in turn. None of them is in the first release.</p>
+        <dl class="promises">
+          <div>
+            <dt>Redaction</dt>
+            <dd>Find sensitive details such as card numbers, government IDs and personal information, remove them from the transcript and silence the same moments in the stored recording. Each redaction records which rule made it. This comes before anything that lets more people see transcripts.</dd>
+          </div>
+          <div>
+            <dt>Search and tagging</dt>
+            <dd>Search every transcript and call by what was said. Phrase rules tag calls automatically, and calls can be found by agent, team, queue and date.</dd>
+          </div>
+          <div>
+            <dt>Live monitoring and compliance alerts</dt>
+            <dd>Transcribe calls while they happen, let authorised people listen in, and raise an alert the moment a required disclosure is missed or prohibited language is used. Flagged calls stay flagged for review afterwards.</dd>
+          </div>
+          <div>
+            <dt>A web dashboard with playback</dt>
+            <dd>See current and peak call volume, browse recent calls, and play a recording alongside its speaker-labelled transcript. Share a call with a link that expires, with every share recorded.</dd>
+          </div>
+        </dl>
       </div>
     </section>
   </main>

@@ -5,7 +5,7 @@ studio and links out to each product on its own subdomain:
 
 - **CoreVideo** → https://corevideo.iamfatness.us/ (OBS plugin + CoreVideo Pro)
 - **Resonance** → https://resonance.iamfatness.us/ (DJ-style music player / EQ)
-- **SwarmScribe** → https://swarmscribe.iamfatness.us/ (distributed transcription; coming soon)
+- **SwarmScribe** → https://swarmscribe.iamfatness.us/ (transcription for recording archives and recorded calls; coming soon)
 
 The product subdomains live in their own repos (`corevideo.iamfatness.us` in
 [CoreVideo](https://github.com/iamfatness/CoreVideo); `resonance.iamfatness.us`
