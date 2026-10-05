@@ -28,6 +28,7 @@
       <a href="#ways">Archives and calls</a>
       <a href="#how">How it works</a>
       <a href="#words">Your vocabulary</a>
+      <a href="#console">Console</a>
       <a href="#status">Status</a>
       <a href="#roadmap">Roadmap</a>
     </nav>
@@ -131,7 +132,7 @@
         </li>
         <li>
           <h3>Machines join with one command</h3>
-          <p>A follower needs Docker or Kubernetes and a join token. It uses a GPU if it finds one and falls back to the CPU if not.</p>
+          <p>A follower runs in Docker or Kubernetes and needs only a join token. Installing one directly as a Windows or Linux service, for office PCs without Docker, is being built. It uses a GPU if it finds one and falls back to the CPU if not.</p>
         </li>
         <li>
           <h3>Each follower takes one recording at a time</h3>
@@ -233,11 +234,38 @@ how can I help?</pre>
       </div>
     </section>
 
-    <section id="status" class="wrap section">
-      <div class="status">
+    <section id="console" class="wrap section">
+      <h2>One console for every deployment</h2>
+      <p class="section-lede console-lede">Run one SwarmScribe or several, for example one per customer or region, and watch them all from one place. The console can do everything the command-line admin tool can.</p>
+      <figure class="shot">
+        <img src="/assets/console-fleet.png" width="1280" height="780" loading="lazy" alt="The SwarmScribe fleet console. A sidebar lists two deployments, eu-1 and us-1. The main area shows totals for recordings waiting and finished, a Needs a look panel with two failures and a folder that could not be scanned, and a card per deployment with a 24-hour throughput chart.">
+        <figcaption>The fleet console as built, running against two test deployments with invented data.</figcaption>
+      </figure>
+      <dl class="promises">
+        <div>
+          <dt>The whole fleet at a glance</dt>
+          <dd>What is waiting, what finished in the last hour and day, how many followers are at work, and anything that needs a look. A deployment that stops answering is flagged within a minute.</dd>
+        </div>
+        <div>
+          <dt>Act where you are looking</dt>
+          <dd>Open a deployment to retry or cancel jobs, add and scan locations, drain or revoke followers, issue join tokens and read the consent report.</dd>
+        </div>
+        <div>
+          <dt>Roles per deployment</dt>
+          <dd>People sign in once with Microsoft Entra ID or Google. Each person can be a viewer on one deployment and an admin on another, and each deployment sets a ceiling on what the console may do to it.</dd>
+        </div>
+        <div>
+          <dt>Recorded twice</dt>
+          <dd>Every action is written to the console's audit log and to the deployment's own, both naming the person who took it.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section id="status" class="band">
+      <div class="wrap status">
         <div>
           <h2>Where it stands</h2>
-          <p>SwarmScribe is being built now. The transcription engine and the core of the leader exist; followers and call recording are designed and come next. There is nothing to download yet, and no date to announce.</p>
+          <p>SwarmScribe is being built now. The transcription engine, the leader, the followers and the fleet console exist and run together in tests, including transcripts labelled by speaker for two-channel recordings. Still to come are call recording, which is designed, cloud storage, the vocabulary report and the leader's own Kubernetes packaging. There is nothing to download yet, and no date to announce.</p>
         </div>
         <div>
           <h3>Not planned yet</h3>
@@ -245,14 +273,14 @@ how can I help?</pre>
             <li>Telling apart speakers who share one channel</li>
             <li>Languages other than English</li>
             <li>Translation</li>
-            <li>An installer that does not need Docker</li>
+            <li>A graphical installer</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <section id="roadmap" class="band">
-      <div class="wrap">
+    <section id="roadmap" class="wrap section">
+      <div>
         <h2>Planned after the first release</h2>
         <p class="section-lede roadmap-lede">These are agreed and will each be designed and built in turn. None of them is in the first release.</p>
         <dl class="promises">
@@ -269,8 +297,8 @@ how can I help?</pre>
             <dd>Transcribe calls while they happen, let authorised people listen in, and raise an alert the moment a required disclosure is missed or prohibited language is used. Flagged calls stay flagged for review afterwards.</dd>
           </div>
           <div>
-            <dt>A web dashboard with playback</dt>
-            <dd>See current and peak call volume, browse recent calls, and play a recording alongside its speaker-labelled transcript. Share a call with a link that expires, with every share recorded.</dd>
+            <dt>Playback and sharing in the console</dt>
+            <dd>Add current and peak call volume and recent calls to the console, and play a recording alongside its speaker-labelled transcript. Share a call with a link that expires, with every share recorded.</dd>
           </div>
         </dl>
       </div>

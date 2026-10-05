@@ -312,6 +312,17 @@ nav a:hover { color: var(--text); }
 .section-lede { color: var(--muted); max-width: 40ch; }
 .words .promises { grid-template-columns: minmax(0, 1fr); }
 .roadmap-lede { max-width: 60ch; margin: -16px 0 28px; }
+.console-lede { max-width: 62ch; margin: -16px 0 32px; }
+.shot { margin: 0 8px 36px 0; }
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8), 8px 8px 0 var(--amber);
+}
+.shot figcaption { margin-top: 20px; font-size: 14px; color: var(--muted); }
 code {
   font-family: var(--mono);
   font-size: 0.9em;
