@@ -62,3 +62,32 @@ jobs:
       - name: Deploy to Cloudflare Workers
         if: steps.cloudflare_config.outputs.deploy_enabled == 'true'
         run: npx wrangler@latest deploy --config ${{ matrix.config }}
+
+  falconsales:
+    # Built from the separate iamfatness/FalconSales repo (Next.js static export),
+    # deployed with this repo's Cloudflare credentials. Re-run to pick up new FalconSales commits.
+    name: Deploy falconsales.iamfatness.us
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          repository: iamfatness/FalconSales
+          ref: main
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      - name: Deploy to Cloudflare Workers
+        if: env.CLOUDFLARE_API_TOKEN != '' && env.CLOUDFLARE_ACCOUNT_ID != ''
+        run: npx wrangler@latest deploy --config wrangler.jsonc
